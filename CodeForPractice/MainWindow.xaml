@@ -5,8 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeForPractice"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800" Closing="Window_Closing">
     <Grid>
-        
+        <Grid.RowDefinitions >
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Name="BtnStart" Click="BtnStart_Click">
+            <Grid.Row>0</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>Start</Button.Content>
+        </Button>
+        <Button Name="BtnStop" Click="BtnStop_Click">
+            <Grid.Row>0</Grid.Row>
+            <Grid.Column>1</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>Stop</Button.Content>
+        </Button>
+        <Button Name="BtnContinue" Click="BtnContinue_Click">
+            <Grid.Row>0</Grid.Row>
+            <Grid.Column>2</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>Continue</Button.Content>
+        </Button>
+        <TextBox Name="TbLog" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="4" Margin="10">
+            <TextBox.HorizontalScrollBarVisibility>Auto</TextBox.HorizontalScrollBarVisibility>
+            <TextBox.VerticalScrollBarVisibility>Auto</TextBox.VerticalScrollBarVisibility>
+        </TextBox>
+        <Label Name="LbProcess" Grid.Row="3" Grid.Column="0" Content="Processing 0 %" Margin="10" HorizontalAlignment="Center"></Label>
+        <ProgressBar Name="BarProcess" Grid.Row="4" Grid.ColumnSpan="4" Margin="10"></ProgressBar>
+        <Button Name="SubWindow" Click="SubWindow_Click">
+            <Grid.Row>1</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>Show</Button.Content>
+        </Button>
+        <Button Name="iTest" Click="Test_Click">
+            <Grid.Row>1</Grid.Row>
+            <Grid.Column>1</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>iTest</Button.Content>
+        </Button>
+        <Button Name="MathNetTest" Click="MathNetTest_Click">
+            <Grid.Row>1</Grid.Row>
+            <Grid.Column>1</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>MathNetTest</Button.Content>
+        </Button>
     </Grid>
 </Window>
