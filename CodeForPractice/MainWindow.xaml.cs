@@ -170,13 +170,14 @@ namespace CodeForPractice
 
         private void MathNetTest_Click(object sender, RoutedEventArgs e)
         {
-
-            MWNumericArray missTone = new int[] { 1000, 2000 };
             MWCharArray fileDir = "E:\\JiweiSung\\VisualStudioProject2017\\CodeForPractice\\";
-            MWCharArray fileName = "NoNative";
-            MWNumericArray dslProfile = 4;
+            MWCharArray fileName = "20180527";
+
+            MWNumericArray profile = new int[] { 6, 32, 871, 1205, 1972, 2781, 8192 };
+            MWNumericArray withMissTone = 0;
+            MWNumericArray missToneList = new int[] { 1000, 2000 };
             MWNumericArray upLimitPar = 16;
-            MWNumericArray lowLimitPar = 15;
+            MWNumericArray lowLimitPar = 13;
             MWNumericArray maxVoltage = 1;
             MWNumericArray ifftSize = 65536;
             MWNumericArray bitWidth = 16;
@@ -184,26 +185,11 @@ namespace CodeForPractice
             MWNumericArray withFile = 1;
 
             MatlabData.N8241aWfm n8241aData = new MatlabData.N8241aWfm();
-            MWArray[] result = n8241aData.DslWfmData(3, dslProfile, missTone, upLimitPar, lowLimitPar, maxVoltage, fileDir, fileName, ifftSize, bitWidth, instrPar, withFile);
 
-            Log(1, result[0].ToString());
-            Log(1, result[1].ToString());
-            //Log(1, result[2].ToString());
+            MWArray[] realPar = n8241aData.DslWfmDataConfig(2, profile, withMissTone, missToneList, upLimitPar, lowLimitPar, maxVoltage, fileDir, fileName, ifftSize, bitWidth, instrPar, withFile);
 
-            MWNumericArray array = result[2] as MWNumericArray;
-
-
-            double[] x = (double[])array.ToVector(MWArrayComponent.Real);
-
-            //foreach (var item in array)
-            //{
-
-            //}.ToString()
-
-            Log(1, x.Sum().ToString());
-
-
-            Log(1, TestMethod_Array(x, (int)ifftSize).ToString());
+            Log(1, realPar[0].ToString());
+            Log(1, realPar[1].ToString());
         }
     }
 }
