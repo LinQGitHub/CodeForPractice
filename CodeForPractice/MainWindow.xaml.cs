@@ -23,6 +23,9 @@ using System.ComponentModel;
 using ImPort;
 using System.Runtime.InteropServices;
 
+using Agilent.AgXSAn.Interop;
+using Ivi.Driver.Interop;
+
 namespace CodeForPractice
 {
     /// <summary>
@@ -30,9 +33,11 @@ namespace CodeForPractice
     /// </summary>
     public partial class MainWindow : System.Windows.Window
     {
-        [DllImport("E:\\JiweiSung\\VisualStudioProject2017\\CodeForPractice\\x64\\Release\\CodeForCppDll.dll", SetLastError = true, EntryPoint = "TestMethod_Array")]
-
+        [DllImport("E:\\JiweiSung\\VisualStudioProject2017\\CodeForPractice\\x64\\Release\\CodeForCppDll.dll", CharSet = CharSet.Ansi)]
         private extern static double TestMethod_Array(double[] _array, int _size);
+
+        [DllImport("E:\\JiweiSung\\VisualStudioProject2017\\CodeForPractice\\x64\\Release\\CodeForCppDll.dll", CharSet = CharSet.Ansi)]
+        private extern static int TryCatchTest(int _choice);
 
         private BackgroundWorker bgWorker = new BackgroundWorker();
 
@@ -190,6 +195,61 @@ namespace CodeForPractice
 
             Log(1, realPar[0].ToString());
             Log(1, realPar[1].ToString());
+        }
+
+        private void ButtonN9030aTest_Click(object sender, RoutedEventArgs e)
+        {
+            //AgXSAn n9030a = new AgXSAn();
+            //try
+            //{
+            //    n9030a.Initialize("TCPIP0::192.168.2.100::inst0::INSTR", true, true, "");
+            //}
+            //catch (Exception)
+            //{
+            //    Log(1, "Error : " + e.ToString());
+            //}
+
+            //int _code = 0;
+            //string _message = null;
+            //n9030a.Utility.ErrorQuery(ref _code, ref _message);
+            try
+            {
+                TryCatchTestMethod(0);
+            }
+            catch (Exception)
+            {
+                Log(1, "Error : " + e.ToString());
+            }
+        }
+
+        private void TryCatchTestMethod(int _choice)
+        {
+            if (TryCatchTest(_choice) != 0)
+            {
+                throw new Exception("Wrong !");
+            }
+            else
+            {
+                Log(1, "right !");
+            }
+        }
+
+        private void ButtonTest0_Click(object sender, RoutedEventArgs e)
+        {
+            Int64 x = 0;
+            try
+            {
+                //x = Convert.ToInt64(TextBoxData0.Text);
+                x = Int64.Parse(TextBoxData0.Text, System.Globalization.NumberStyles.Any);
+            }
+            catch (Exception Err)
+            {
+                Log(1, Err.Message.ToString());                
+            }
+            finally
+            {
+                Log(1, x.ToString());
+            }
         }
     }
 }

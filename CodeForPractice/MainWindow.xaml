@@ -13,13 +13,38 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+        <TextBox Name="TextBoxData0">
+            <Grid.Row>5</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <TextBox.Margin>10</TextBox.Margin>
+        </TextBox>
+        <TextBox Name="TextBoxData1">
+            <Grid.Row>5</Grid.Row>
+            <Grid.Column>1</Grid.Column>
+            <TextBox.Margin>10</TextBox.Margin>
+        </TextBox>
+        <TextBox Name="TextBoxData2">
+            <Grid.Row>5</Grid.Row>
+            <Grid.Column>2</Grid.Column>
+            <TextBox.Margin>10</TextBox.Margin>
+        </TextBox>
+        <TextBox Name="TextBoxData3">
+            <Grid.Row>5</Grid.Row>
+            <Grid.Column>3</Grid.Column>
+            <TextBox.Margin>10</TextBox.Margin>
+        </TextBox>
+
+
         <Button Name="BtnStart" Click="BtnStart_Click">
             <Grid.Row>0</Grid.Row>
             <Grid.Column>0</Grid.Column>
@@ -38,12 +63,48 @@
             <Button.Margin>10</Button.Margin>
             <Button.Content>Continue</Button.Content>
         </Button>
-        <TextBox Name="TbLog" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="4" Margin="10">
+        <Button Name="ButtonN9030aTest" Click="ButtonN9030aTest_Click">
+            <Grid.Row>1</Grid.Row>
+            <Grid.Column>2</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>ButtonN9030aTest</Button.Content>
+        </Button>
+
+        <Button Name="ButtonTest0" Click="ButtonTest0_Click">
+            <Grid.Row>0</Grid.Row>
+            <Grid.Column>3</Grid.Column>
+            <Button.Margin>10</Button.Margin>
+            <Button.Content>ButtonTest0</Button.Content>
+        </Button>
+
+
+
+
+
+
+
+        <TextBox Name="TbLog">
+            <Grid.Row>2</Grid.Row>
+            <Grid.RowSpan>1</Grid.RowSpan>
+            <Grid.Column>0</Grid.Column>
+            <Grid.ColumnSpan>5</Grid.ColumnSpan>
+            <TextBox.Margin>10</TextBox.Margin>
             <TextBox.HorizontalScrollBarVisibility>Auto</TextBox.HorizontalScrollBarVisibility>
             <TextBox.VerticalScrollBarVisibility>Auto</TextBox.VerticalScrollBarVisibility>
         </TextBox>
-        <Label Name="LbProcess" Grid.Row="3" Grid.Column="0" Content="Processing 0 %" Margin="10" HorizontalAlignment="Center"></Label>
-        <ProgressBar Name="BarProcess" Grid.Row="4" Grid.ColumnSpan="4" Margin="10"></ProgressBar>
+        <Label Name="LbProcess">
+            <Grid.Row>3</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <Label.Margin>10</Label.Margin>
+            <Label.HorizontalAlignment>Center</Label.HorizontalAlignment>
+            <Label.Content>Processing 0 %</Label.Content>
+        </Label>
+        <ProgressBar Name="BarProcess">
+            <Grid.Row>3</Grid.Row>
+            <Grid.Column>0</Grid.Column>
+            <Grid.ColumnSpan>4</Grid.ColumnSpan>
+            <ProgressBar.Margin>10</ProgressBar.Margin>
+        </ProgressBar>
         <Button Name="SubWindow" Click="SubWindow_Click">
             <Grid.Row>1</Grid.Row>
             <Grid.Column>0</Grid.Column>

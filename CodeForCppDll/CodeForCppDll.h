@@ -11,5 +11,6 @@
 extern "C"
 {
 	CodeForCppDll_API double TestMethod_Array(double _array[], int _size);
+	CodeForCppDll_API int TryCatchTest(int _choice);
 }
 
