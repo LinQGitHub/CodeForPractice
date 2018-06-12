@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 
 using Agilent.AgXSAn.Interop;
 using Ivi.Driver.Interop;
+using System.Globalization;
 
 namespace CodeForPractice
 {
@@ -40,12 +41,14 @@ namespace CodeForPractice
         private extern static int TryCatchTest(int _choice);
 
         private BackgroundWorker bgWorker = new BackgroundWorker();
+        private BackgroundWorker FuncBgWorker = new BackgroundWorker();
 
         public MainWindow()
         {
             InitializeComponent();
             InitializeBgWorker();
             InitializeBarProcess();
+            InitializeFuncBgWorker();
         }
 
         private void InitializeBarProcess()
@@ -61,6 +64,30 @@ namespace CodeForPractice
             bgWorker.DoWork += BgWorker_DoWork;
             bgWorker.ProgressChanged += BgWorker_ProgressChanged;
             bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
+        }
+
+        private void InitializeFuncBgWorker()
+        {
+            FuncBgWorker.WorkerReportsProgress = true;
+            FuncBgWorker.WorkerSupportsCancellation = true;
+            FuncBgWorker.DoWork += FuncBgWorker_DoWork;
+            FuncBgWorker.ProgressChanged += FuncBgWorker_ProgressChanged;
+            FuncBgWorker.RunWorkerCompleted += FuncBgWorker_RunWorkerCompleted;
+        }
+
+        private void FuncBgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FuncBgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FuncBgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
@@ -236,19 +263,29 @@ namespace CodeForPractice
 
         private void ButtonTest0_Click(object sender, RoutedEventArgs e)
         {
-            Int64 x = 0;
-            try
+            StringConvert();
+        }
+
+        private void StringConvert()
+        {
+            //00
+            //功能：字符串转换为整型
+            //依赖：using System.Globalization;
+            string varX000 = "2";
+            int varY000 = int.Parse(varX000, NumberStyles.Any);
+            //01
+            //功能：字符串转换为数组
+            //说明：字符串数组前后不能有空格否则split后前后元素均为空，转换时会出异常。
+            string varX010 = "2 3 4";
+            string[] varY010 = varX010.Split(' ');
+            List<int> varY011 = new List<int>();
+            foreach (var item in varY010)
             {
-                //x = Convert.ToInt64(TextBoxData0.Text);
-                x = Int64.Parse(TextBoxData0.Text, System.Globalization.NumberStyles.Any);
+                varY011.Add(int.Parse(item, NumberStyles.Any));
             }
-            catch (Exception Err)
+            foreach (var item in varY011)
             {
-                Log(1, Err.Message.ToString());                
-            }
-            finally
-            {
-                Log(1, x.ToString());
+                Log(1, item.ToString());
             }
         }
     }
