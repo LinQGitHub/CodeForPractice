@@ -26,6 +26,9 @@ using System.Runtime.InteropServices;
 using Agilent.AgXSAn.Interop;
 using Ivi.Driver.Interop;
 using System.Globalization;
+using System.Data;
+
+
 
 namespace CodeForPractice
 {
@@ -263,30 +266,51 @@ namespace CodeForPractice
 
         private void ButtonTest0_Click(object sender, RoutedEventArgs e)
         {
-            StringConvert();
+            NotesDataTableProcess();
         }
 
-        private void StringConvert()
+        private void NotesStringProcess()
         {
-            //00
             //功能：字符串转换为整型
             //依赖：using System.Globalization;
-            string varX000 = "2";
-            int varY000 = int.Parse(varX000, NumberStyles.Any);
-            //01
+            string varX00 = "2";
+            int varY00 = int.Parse(varX00, NumberStyles.Any);
+
             //功能：字符串转换为数组
-            //说明：字符串数组前后不能有空格否则split后前后元素均为空，转换时会出异常。
-            string varX010 = "2 3 4";
-            string[] varY010 = varX010.Split(' ');
-            List<int> varY011 = new List<int>();
-            foreach (var item in varY010)
+            string varX11 = "2 3 4";
+            string[] varY11 = varX11.Split(' ');
+            foreach (var item in varY11)
             {
-                varY011.Add(int.Parse(item, NumberStyles.Any));
+
             }
-            foreach (var item in varY011)
+        }
+
+        private void NotesDataTableProcess()
+        {
+            DataTable mtprDataTable = new DataTable();
+            List<int> missToneList = new List<int>() { 1, 2, 3, 4, 5 };
+
+            foreach (var item in missToneList)
             {
-                Log(1, item.ToString());
+                mtprDataTable.Columns.Add(new DataColumn("column" + item.ToString(), typeof(double)));
             }
+
+            for (int i = 0; i < 2; i++)
+            {
+                List<double> mtprList = new List<double>() { 1, 2, 3, 4, 5 };
+
+                object[] values = new object[mtprList.Count];
+
+
+                for (int j = 0; j < mtprList.Count; j++)
+                {
+                    values[j] = mtprList[j];
+                }
+
+                mtprDataTable.Rows.Add(values);
+            }
+            object result = mtprDataTable.Compute("Var(column1)", string.Empty);
+            Log(1, result.ToString());
         }
     }
 }
