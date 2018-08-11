@@ -27,8 +27,8 @@ using Agilent.AgXSAn.Interop;
 using Ivi.Driver.Interop;
 using System.Globalization;
 using System.Data;
-
-
+using System.Net.Sockets;
+using System.Text;
 
 namespace CodeForPractice
 {
@@ -110,7 +110,6 @@ namespace CodeForPractice
             //异步取消请求，需在耗时程序内检测取消请求
             bgWorker.CancelAsync();
         }
-
         private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             //耗时程序需要在DoWork事件里进行，并检测异步取消请求，禁止在DoWork事件里操作UI
@@ -127,14 +126,12 @@ namespace CodeForPractice
                 }
             }
         }
-
         private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //在ProgressChanged事件里处理，状态上报，进程百分比和用户状态
             BarProcess.Value = e.ProgressPercentage;
             LbProcess.Content = e.UserState.ToString() + " " + e.ProgressPercentage.ToString() + " %";
         }
-
         private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             //在completed事件里，处理异步取消、处理结束错误、处理正常结束逻辑
@@ -157,7 +154,6 @@ namespace CodeForPractice
             }
 
         }
-
         private void Log(int _re_print, string _log)
         {
             switch (_re_print)
@@ -266,7 +262,14 @@ namespace CodeForPractice
 
         private void ButtonTest0_Click(object sender, RoutedEventArgs e)
         {
-            NotesDataTableProcess();
+            try
+            {
+                TelnetPortWrite("192.168.0.1", 23, 0xc0);
+            }
+            catch (Exception Err)
+            {
+                Log(1, Err.Message.ToString());
+            }
         }
 
         private void NotesStringProcess()
@@ -287,30 +290,61 @@ namespace CodeForPractice
 
         private void NotesDataTableProcess()
         {
+            /*向datatable添加list的方法*/
             DataTable mtprDataTable = new DataTable();
             List<int> missToneList = new List<int>() { 1, 2, 3, 4, 5 };
-
+            /*根据list的长度添加datatable的列*/
             foreach (var item in missToneList)
             {
                 mtprDataTable.Columns.Add(new DataColumn("column" + item.ToString(), typeof(double)));
             }
-
             for (int i = 0; i < 2; i++)
             {
                 List<double> mtprList = new List<double>() { 1, 2, 3, 4, 5 };
-
                 object[] values = new object[mtprList.Count];
-
-
                 for (int j = 0; j < mtprList.Count; j++)
                 {
                     values[j] = mtprList[j];
                 }
-
                 mtprDataTable.Rows.Add(values);
             }
-            object result = mtprDataTable.Compute("Var(column1)", string.Empty);
+            /*Compue支持聚合函数,例如,Min,Max,Avg等*/
+            /*Var(列名)----方差,行数必须大于2否则报错*/
+            /*StDev(列名)----标准差,行数必须大于2否则报错*/
+            List<int> result = new List<int>();
+            /*遍历所有列进行Compute计算*/
+            foreach (DataColumn item in mtprDataTable.Columns)
+            {
+                result.Add((int)mtprDataTable.Compute("Var(" + item.ColumnName.ToString() + ")", string.Empty));
+            }
             Log(1, result.ToString());
         }
+
+        /*Telnet串口通信，依赖项目：using System.Net.Sockets;*/
+        private void TelnetPortWrite(string _host_name, int _port, int _gain)
+        {
+            TcpClient tcpClientTelnet;
+            //tcpClientTelnet = new TcpClient(_host_name, _port);
+            if (true)
+            {
+                byte[] cmdBuffer = BitConverter.GetBytes(_gain);
+                                
+                //tcpClientTelnet.GetStream().Write(cmdBuffer, 0, cmdBuffer.Length);
+                foreach (var item in cmdBuffer)
+                {
+                    Log(1, item.ToString("0x"));
+                }
+            }
+            else
+            {
+                throw new Exception("Connect to " + _host_name + " " + _port.ToString() + " " + "failed !");
+            }
+        }
     }
+
+    public class ProcessUI
+    {
+
+    }
+
 }
